@@ -1,12 +1,11 @@
 var state = require('./state')
-var wombleList = require('./templates/womble-list.hbs')
+var index = require('./templates/index.hbs')
 
 document.addEventListener('DOMContentLoaded', render)
 
 function render () {
-  var wombles = state.getState()
   var app = document.getElementById('app')
-  app.innerHTML = wombleList({ wombles: wombles })
+  app.innerHTML = index(getViewData())
   bindEventListeners(app)
 }
 
@@ -17,17 +16,50 @@ function bindEventListeners (elem) {
       toggleWomble(e.target.parentNode)
     })
   }
+  document.getElementById('home-link')
+    .addEventListener('click', function () {
+      setPage('home')
+    })
+  document.getElementById('about-link')
+    .addEventListener('click', function () {
+      setPage('about')
+    })
+}
+
+function getViewData() {
+  var data = state.get()
+  switch (data.page) {
+  case 'home':
+    data.showHome = true
+    data.title = 'Home'
+    data.subtitle = 'A list of wombles'
+    break
+  case 'about':
+    data.title = 'About'
+    data.subtitle = 'Learn about wombles'
+    data.showAbout = true
+    break
+  }
+  return data
+}
+
+function setPage (page) {
+  var data = state.get()
+  data.page = page
+  state.set(data)
+  render()
 }
 
 function toggleWomble (elem) {
   var name = elem.getAttribute('data-name')
   var showingDetails = elem.getAttribute('data-details') === 'true'
-  var updated = state.getState().map(function (womble) {
+  var data = state.get()
+  data.wombles = data.wombles.map(function (womble) {
     if (womble.name === name) {
       womble.showingDetails = !showingDetails
     }
     return womble
   })
-  state.setState(updated)
+  state.set(data)
   render()
 }

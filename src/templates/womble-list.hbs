@@ -1,12 +1,12 @@
-{{> header}}
-<ul>
-  {{#each wombles}}
-    <li data-details="{{showingDetails}}" data-name="{{name}}">
-      <span>{{name}} ({{email}})</span>
-      {{#if showingDetails}}
-        {{> details}}
-      {{/if}}
-    </li>
-  {{/each}}
-</ul>
-{{> footer}}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Wombles</h3>
+  </div>
+  <div class="panel-body">
+    <div id="womble-list" class="list-group">
+      {{#each wombles}}
+        {{> womble}}
+      {{/each}}
+    </div>
+  </div>
+</div>

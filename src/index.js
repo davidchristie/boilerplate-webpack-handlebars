@@ -1,29 +1,19 @@
+/*global $*/
+
 var state = require('./state')
 var index = require('./templates/index.hbs')
 
-document.addEventListener('DOMContentLoaded', render)
+$(document).ready(render)
 
 function render () {
-  var app = document.getElementById('app')
-  app.innerHTML = index(getViewData())
-  bindEventListeners(app)
+  $('#app').html(index(getViewData()))
+  bindEventListeners()
 }
 
-function bindEventListeners (elem) {
-  var lis = elem.getElementsByTagName('li')
-  for (var i = 0; i < lis.length; i++) {
-    lis[i].addEventListener('click', function (e) {
-      toggleWomble(e.target.parentNode)
-    })
-  }
-  document.getElementById('home-link')
-    .addEventListener('click', function () {
-      setPage('home')
-    })
-  document.getElementById('about-link')
-    .addEventListener('click', function () {
-      setPage('about')
-    })
+function bindEventListeners () {
+  $('#womble-list > button').click(function (e) { toggleWomble(e.target) })
+  $('#home-link').click(function () { setPage('home') })
+  $('#about-link').click(function () { setPage('about') })
 }
 
 function getViewData() {
@@ -51,8 +41,9 @@ function setPage (page) {
 }
 
 function toggleWomble (elem) {
-  var name = elem.getAttribute('data-name')
-  var showingDetails = elem.getAttribute('data-details') === 'true'
+  var $button = $(elem).closest('button')
+  var name = $button.attr('data-name')
+  var showingDetails = $button.attr('data-details') === 'true'
   var data = state.get()
   data.wombles = data.wombles.map(function (womble) {
     if (womble.name === name) {

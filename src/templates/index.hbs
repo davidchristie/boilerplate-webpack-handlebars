@@ -1,6 +1,17 @@
-{{#if showHome}}
-  {{> womble-list}}
-{{/if}}
-{{#if showAbout}}
-  {{> about}}
-{{/if}}
+{{> nav}}
+
+<div class="container">
+
+  {{> header}}
+
+  {{#if showHome}}
+    {{> womble-list}}
+  {{/if}}
+
+  {{#if showAbout}}
+    {{> about}}
+  {{/if}}
+
+  {{> footer}}
+
+</div>

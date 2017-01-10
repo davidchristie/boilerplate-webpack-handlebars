@@ -1,0 +1,6 @@
+<button type="button" class="list-group-item {{#if showingDetails}}active{{/if}}" data-details="{{showingDetails}}" data-name="{{name}}">
+  {{name}} ({{email}})
+  {{#if showingDetails}}
+    {{> details}}
+  {{/if}}
+</button>
